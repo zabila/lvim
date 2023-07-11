@@ -8,7 +8,7 @@ lvim.keys.normal_mode["<c-f>"] = ":NvimTreeFocus<CR>"
 lvim.keys.insert_mode["jj"] = "<Esc>"
 
 lvim.lsp.buffer_mappings.normal_mode["gh"] = { "<cmd>Lspsaga lsp_finder<cr>", "Find" }
-lvim.lsp.buffer_mappings.normal_mode["F2"] = { "<cmd>Lspsaga rename<cr>", "Rename" }
+lvim.lsp.buffer_mappings.normal_mode["rn"] = { "<cmd>Lspsaga rename<cr>", "Rename" }
 lvim.lsp.buffer_mappings.normal_mode["ca"] = { "<cmd>Lspsaga code_action<cr>", "Code action" }
 lvim.lsp.buffer_mappings.normal_mode["K"] = { "<cmd>Lspsaga hover_doc<cr>", "Documentation" }
 
@@ -107,6 +107,7 @@ wk.mappings["W"] = {
 
 local hop = require('hop')
 local directions = require('hop.hint').HintDirection
+
 vim.keymap.set('', 'f', function()
     hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
 end, { remap = true })

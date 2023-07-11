@@ -72,6 +72,11 @@ lvim.plugins = {
         "Civitasv/cmake-tools.nvim",
         dependencies = { { "nvim-lua/plenary.nvim" } }
     },
+    {
+        "peterhoeg/vim-qml",
+        event = "BufRead",
+        ft = { "qml" },
+    },
 }
 
 table.insert(lvim.plugins, {
