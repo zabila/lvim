@@ -46,7 +46,11 @@ wk.mappings["m"] = {
     p = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev file" },
 }
 
-
+wk.mappings.g.t = {
+    name = "Worktree",
+    l = { require("telescope").extensions.git_worktree.git_worktrees, "Telescope" },
+    c = { require("telescope").extensions.git_worktree.create_git_worktree, "Create" },
+}
 
 local status_telescope, telescope = pcall(require, "telescope.builtin")
 if not status_telescope then
