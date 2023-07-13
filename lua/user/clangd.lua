@@ -6,17 +6,7 @@ lvim.builtin.treesitter.ensure_installed = { "cpp", "c" }
 
 table.insert(lvim.plugins, {
     "p00f/clangd_extensions.nvim",
-})
-
-table.insert(lvim.plugins, {
-    "cdelledonne/vim-cmake",
-    ft = { "cpp", "cmake" },
-    config = function()
-        vim.cmd [[let g:cmake_link_compile_commands = 1]]
-        vim.cmd [[let g:cmake_default_config = "build"]]
-        vim.cmd [[let g:cmake_generate_options = "-G Ninja"]]
-        vim.cmd [[let g:cmake_root_markers = ['CMakeLists.txt', '.git'] ]]
-    end,
+    ft = { "c", "cpp" },
 })
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
@@ -45,17 +35,8 @@ local clangd_flags = {
 }
 
 local provider = "clangd"
-
 local custom_on_attach = function(client, bufnr)
     require("lvim.lsp").common_on_attach(client, bufnr)
-
-    local opts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set("n", "<leader>lh", "<cmd>ClangdSwitchSourceHeader<cr>", opts)
-    vim.keymap.set("x", "<leader>lA", "<cmd>ClangdAST<cr>", opts)
-    vim.keymap.set("n", "<leader>lH", "<cmd>ClangdTypeHierarchy<cr>", opts)
-    vim.keymap.set("n", "<leader>lt", "<cmd>ClangdSymbolInfo<cr>", opts)
-    vim.keymap.set("n", "<leader>lm", "<cmd>ClangdMemoryUsage<cr>", opts)
-
     require("clangd_extensions.inlay_hints").setup_autocmd()
     require("clangd_extensions.inlay_hints").set_inlay_hints()
 end
@@ -85,41 +66,3 @@ local opts = {
 }
 
 require("lvim.lsp.manager").setup("clangd", opts)
-
---NOTE: Should be setuped, never tested this config.
--- install codelldb with :MasonInstall codelldb
--- configure nvim-dap (codelldb)
-lvim.builtin.dap.on_config_done = function(dap)
-    dap.adapters.codelldb = {
-        type = "server",
-        port = "${port}",
-        executable = {
-            -- provide the absolute path for `codelldb` command if not using the one installed using `mason.nvim`
-            command = "codelldb",
-            args = { "--port", "${port}" },
-
-            -- On windows you may have to uncomment this:
-            -- detached = false,
-        },
-    }
-
-    dap.configurations.cpp = {
-        {
-            name = "Launch file",
-            type = "codelldb",
-            request = "launch",
-            program = function()
-                local path
-                vim.ui.input({ prompt = "Path to executable: ", default = vim.loop.cwd() .. "/build/" }, function(input)
-                    path = input
-                end)
-                vim.cmd [[redraw]]
-                return path
-            end,
-            cwd = "${workspaceFolder}",
-            stopOnEntry = false,
-        },
-    }
-
-    dap.configurations.c = dap.configurations.cpp
-end

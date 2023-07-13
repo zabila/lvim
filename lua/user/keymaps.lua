@@ -128,6 +128,12 @@ wk.mappings["W"] = {
     n    = { "<C-w>=", "Normalize Windows" }
 }
 
+vim.keymap.set(
+    { "n", "x" },
+    "<leader>rr",
+    function() require('telescope').extensions.refactoring.refactors() end
+)
+
 local hop = require('hop')
 local directions = require('hop.hint').HintDirection
 

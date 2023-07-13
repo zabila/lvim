@@ -118,8 +118,42 @@ lvim.plugins = {
                 },
             }
         end,
+    },
+    "cdelledonne/vim-cmake",
+    {
+        "ThePrimeagen/refactoring.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-treesitter/nvim-treesitter" }
+        },
+        config = function()
+            require('refactoring').setup()
+            require("telescope").load_extension("refactoring")
+        end,
+    },
+    {
+        "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = function()
+            require 'luasnip'.filetype_extend("c")
+            require 'luasnip'.filetype_extend("cpp")
+            require 'luasnip'.filetype_extend("lua")
+        end
+    },
+    {
+        "tpope/vim-surround",
+        dependencies = { "tpope/vim-repeat" },
     }
 }
+
+vim.cmd(
+    [[
+        let g:cmake_root_markers = ['CMakeLists.txt', 'build', 'cmake-build']
+        let g:cmake_link_compile_commands = 1
+        let g:cmake_build_dir_location = 'COMPILE_COMMANDS_HERE'
+        let g:cmake_build_options= ["-j12"]
+        let g:cmake_generate_options = ["-G Ninja"]
+    ]])
 
 table.insert(lvim.plugins, {
     "zbirenbaum/copilot-cmp",
