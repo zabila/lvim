@@ -69,10 +69,6 @@ lvim.plugins = {
         end
     },
     {
-        "Civitasv/cmake-tools.nvim",
-        dependencies = { { "nvim-lua/plenary.nvim" } }
-    },
-    {
         "peterhoeg/vim-qml",
         event = "BufRead",
         ft = { "qml" },
@@ -97,6 +93,32 @@ lvim.plugins = {
             "nvim-telescope/telescope-fzf-native.nvim",
         }
     },
+    { -- diff / merge
+        "sindrets/diffview.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        cmd = { "DiffviewFileHistory", "DiffviewOpen" },
+        config = function()              -- needs config, for access to diffview.actions in mappings
+            require("diffview").setup {
+                enhanced_diff_hl = true, -- true = no red for deletes
+                show_help_hints = false,
+                file_history_panel = {
+                    win_config = { height = 5 },
+                },
+                hooks = {
+                    diff_buf_read = function()
+                        -- set buffername, mostly for tabline (lualine)
+                        pcall(function() vim.api.nvim_buf_set_name(0, "Diffview") end)
+                    end,
+                },
+                view = {
+                    default = {
+                        layout = "diff2_horizontal",
+                        winbar_info = true,
+                    },
+                },
+            }
+        end,
+    }
 }
 
 table.insert(lvim.plugins, {

@@ -2,19 +2,33 @@ lvim.format_on_save = true
 vim.diagnostic.config({ virtual_text = true })
 
 lvim.builtin.treesitter.highlight.enable = true
-
--- auto install treesitter parsers
 lvim.builtin.treesitter.ensure_installed = { "cpp", "c" }
 
--- Additional Plugins
 table.insert(lvim.plugins, {
     "p00f/clangd_extensions.nvim",
 })
 
+table.insert(lvim.plugins, {
+    "cdelledonne/vim-cmake",
+    ft = { "cpp", "cmake" },
+    config = function()
+        vim.cmd [[let g:cmake_link_compile_commands = 1]]
+        vim.cmd [[let g:cmake_default_config = "build"]]
+        vim.cmd [[let g:cmake_generate_options = "-G Ninja"]]
+        vim.cmd [[let g:cmake_root_markers = ['CMakeLists.txt', '.git'] ]]
+    end,
+})
+
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
 
--- some settings can only passed as commandline flags, see `clangd --help`
 local clangd_flags = {
+
+    "--fallback-style=google",
+    "-j=12",
+    "--header-insertion=iwyu",
+    "--header-insertion-decorators",
+    "--ranking-model=heuristics",
+
     "--background-index",
     "--fallback-style=Google",
     "--all-scopes-completion",
@@ -27,12 +41,7 @@ local clangd_flags = {
     "--folding-ranges",
     "--enable-config",          -- clangd 11+ supports reading from .clangd configuration file
     "--offset-encoding=utf-16", --temporary fix for null-ls
-    -- "--limit-references=1000",
-    -- "--limit-resutls=1000",
-    -- "--malloc-trim",
-    -- "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type",
-    -- "--header-insertion=never",
-    -- "--query-driver=<list-of-white-listed-complers>"
+    "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type",
 }
 
 local provider = "clangd"
@@ -73,16 +82,11 @@ local opts = {
     cmd = { provider, unpack(clangd_flags) },
     on_attach = custom_on_attach,
     on_init = custom_on_init,
-    on_new_config = function(new_config, _)
-        local status_cmake, cmake = pcall(require, "cmake-tools")
-        if status_cmake then
-            cmake.clangd_on_new_config(new_config)
-        end
-    end,
 }
 
 require("lvim.lsp.manager").setup("clangd", opts)
 
+--NOTE: Should be setuped, never tested this config.
 -- install codelldb with :MasonInstall codelldb
 -- configure nvim-dap (codelldb)
 lvim.builtin.dap.on_config_done = function(dap)

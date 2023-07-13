@@ -46,10 +46,29 @@ wk.mappings["m"] = {
     p = { ":lua require('harpoon.ui').nav_prev()<cr>", "Prev file" },
 }
 
+wk.mappings["p"] = {
+    name = ' Projects ',
+    l = { ':Telescope projects<cr>', 'Projects' }, -- requires telescope-project.nvim plugin
+    r = { ':Telescope resume<cr>', 'Resume' },
+}
+wk.mappings.g.d = { ":DiffviewOpen<cr>", "DiffView" }
+
 wk.mappings.g.t = {
     name = "Worktree",
     l = { require("telescope").extensions.git_worktree.git_worktrees, "Telescope" },
     c = { require("telescope").extensions.git_worktree.create_git_worktree, "Create" },
+}
+
+wk.mappings.l.R = {
+    ":LspRestart<cr>",
+    kind.icons.exit .. " Restart"
+}
+
+lvim.builtin.which_key.mappings["t"] = {
+    name = "+Terminal",
+    f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
+    v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
+    h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
 }
 
 local status_telescope, telescope = pcall(require, "telescope.builtin")

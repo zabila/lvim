@@ -13,5 +13,4 @@ vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 
-
-vim.g.git_worktree_log_level = debug
+vim.cmd([[set list listchars=tab:\→\ ,extends:>,precedes:<,eol:¬,space:·]])
