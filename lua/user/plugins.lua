@@ -143,6 +143,12 @@ lvim.plugins = {
     {
         "tpope/vim-surround",
         dependencies = { "tpope/vim-repeat" },
+        -- cs{exting}{new} - change surrounding
+        -- ds{exting} - delete surrounding
+        -- ys{motion}{exting} - add surrounding
+        -- yS{exting}{new} - add surrounding on line
+        -- yss{exting} - add surrounding on line
+        --
     }
 }
 
