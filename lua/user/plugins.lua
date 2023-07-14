@@ -148,14 +148,22 @@ lvim.plugins = {
         -- yss{exting} - add surrounding on line
         --
     },
-    --NOTE: It's plugin donsn't work. Please check why!
+    "mfussenegger/nvim-dap",
     {
-        "ryuichiroh/vim-cspell",
-        cmd = 'CSpell',
-        init = function()
-            vim.g.cspell_disable_autogroup = true
+        "rcarriga/nvim-dap-ui",
+        config = function()
+            require("dapui").setup()
         end,
     },
+    {
+        "nvim-telescope/telescope-dap.nvim",
+        config = function()
+            require("telescope").load_extension("dap")
+        end,
+    },
+    "theHamsta/nvim-dap-virtual-text",
+    "puremourning/vimspector"
+
 }
 
 vim.cmd(
