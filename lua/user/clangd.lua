@@ -59,10 +59,19 @@ local custom_on_init = function(client, bufnr)
   ]]
 end
 
+local cmake_status, cmake = pcall(require, "cmake-tools")
+if not cmake_status then
+    print("cmake-tools not found")
+    return
+end
+
 local opts = {
     cmd = { provider, unpack(clangd_flags) },
     on_attach = custom_on_attach,
     on_init = custom_on_init,
+    on_new_config = function(new_config, _)
+        cmake.clangd_on_new_config(new_config)
+    end,
 }
 
 require("lvim.lsp.manager").setup("clangd", opts)

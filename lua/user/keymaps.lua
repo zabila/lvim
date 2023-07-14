@@ -95,9 +95,8 @@ wk.mappings["B"] = {
     name = "CMake",
     c = { "<cmd>CMakeGenerate<cr>", "Generate" },
     b = { "<cmd>CMakeBuild<cr>", "Build" },
+    r = { "<cmd>CMakeRun<cr>", "Run" },
     S = { "<cmad>CMakeStop<cr>", "Stop" },
-    t = { "<cmd>CMakeSelectBuildTarget<cr>", "Select build target" },
-    C = { "<cmd>CMakeClean<cr>", "Clean" },
 }
 
 wk.mappings["W"] = {

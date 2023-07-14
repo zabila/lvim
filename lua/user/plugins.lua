@@ -64,7 +64,6 @@ lvim.plugins = {
         'LukasPietzschmann/telescope-tabs',
         config = function()
             require 'telescope-tabs'.setup {
-                -- Your custom config :^)
             }
         end
     },
@@ -77,11 +76,11 @@ lvim.plugins = {
         "zabila/git-worktree.nvim",
         config = function()
             local opt = {
-                change_directory_command = "cd",                   -- default: "cd"
-                update_on_change = true,                           -- default: true
-                update_on_change_command = "Telescope find_files", -- default: "e ."
-                clearjumps_on_change = true,                       -- default: true
-                autopush = false,                                  -- default: false
+                change_directory_command = "cd",
+                update_on_change = true,
+                update_on_change_command = "Telescope find_files",
+                clearjumps_on_change = true,
+                autopush = false,
             }
             require("git-worktree").setup(opt)
             require("telescope").load_extension("git_worktree")
@@ -97,16 +96,15 @@ lvim.plugins = {
         "sindrets/diffview.nvim",
         dependencies = "nvim-lua/plenary.nvim",
         cmd = { "DiffviewFileHistory", "DiffviewOpen" },
-        config = function()              -- needs config, for access to diffview.actions in mappings
+        config = function()
             require("diffview").setup {
-                enhanced_diff_hl = true, -- true = no red for deletes
+                enhanced_diff_hl = true,
                 show_help_hints = false,
                 file_history_panel = {
                     win_config = { height = 5 },
                 },
                 hooks = {
                     diff_buf_read = function()
-                        -- set buffername, mostly for tabline (lualine)
                         pcall(function() vim.api.nvim_buf_set_name(0, "Diffview") end)
                     end,
                 },
@@ -119,7 +117,7 @@ lvim.plugins = {
             }
         end,
     },
-    "cdelledonne/vim-cmake",
+    "Civitasv/cmake-tools.nvim",
     {
         "ThePrimeagen/refactoring.nvim",
         dependencies = {
@@ -149,12 +147,20 @@ lvim.plugins = {
         -- yS{exting}{new} - add surrounding on line
         -- yss{exting} - add surrounding on line
         --
-    }
+    },
+    --NOTE: It's plugin donsn't work. Please check why!
+    {
+        "ryuichiroh/vim-cspell",
+        cmd = 'CSpell',
+        init = function()
+            vim.g.cspell_disable_autogroup = true
+        end,
+    },
 }
 
 vim.cmd(
     [[
-        let g:cmake_root_markers = ['CMakeLists.txt', 'build', 'cmake-build']
+        let g:cmake_root_markers = ['CMakeLists.txt', 'build', 'cmake-build', '.git']
         let g:cmake_link_compile_commands = 1
         let g:cmake_build_dir_location = 'COMPILE_COMMANDS_HERE'
         let g:cmake_build_options= ["-j12"]
@@ -174,23 +180,3 @@ table.insert(lvim.plugins, {
 lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "frecency")
 end
-
-local Worktree = require("git-worktree")
-
--- op = Operations.Switch, Operations.Create, Operations.Delete
--- metadata = table of useful values (structure dependent on op)
---      Switch
---          path = path you switched to
---          prev_path = previous worktree path
---      Create
---          path = path where worktree created
---          branch = branch name
---          upstream = upstream remote name
---      Delete
---          path = path where worktree deleted
-
-Worktree.on_tree_change(function(op, metadata)
-    if op == Worktree.Operations.Switch then
-        print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
-    end
-end)
