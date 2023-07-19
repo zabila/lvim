@@ -75,3 +75,43 @@ local opts = {
 }
 
 require("lvim.lsp.manager").setup("clangd", opts)
+
+
+local status_ok_dap, dap = pcall(require, "dap")
+if not status_ok_dap then
+    print "dap not found"
+    return
+end
+
+dap.adapters.codelldb  = {
+    type = 'server',
+    port = "${port}",
+    executable = {
+        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb.cmd",
+        args = { "--port", "${port}" },
+        detached = false,
+    }
+
+    -- attach = {
+    --     pidProperty = "processId",
+    --     pidSelect = "ask",
+    -- },
+}
+
+-- this configuration should start cpptools and the debug the executable main in the current directory when executing :DapContinue
+dap.configurations.cpp = {
+    {
+        name = "Launch",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+        runInTerminal = true,
+        console = "externalTerminal",
+    },
+}
+
+dap.configurations.c   = dap.configurations.cpp

@@ -130,15 +130,6 @@ lvim.plugins = {
         end,
     },
     {
-        "L3MON4D3/LuaSnip",
-        dependencies = { "rafamadriz/friendly-snippets" },
-        config = function()
-            require 'luasnip'.filetype_extend("c")
-            require 'luasnip'.filetype_extend("cpp")
-            require 'luasnip'.filetype_extend("lua")
-        end
-    },
-    {
         "tpope/vim-surround",
         dependencies = { "tpope/vim-repeat" },
         -- cs{exting}{new} - change surrounding
@@ -162,9 +153,9 @@ lvim.plugins = {
         end,
     },
     "theHamsta/nvim-dap-virtual-text",
-    "puremourning/vimspector"
-
 }
+
+
 
 vim.cmd(
     [[
@@ -175,13 +166,32 @@ vim.cmd(
         let g:cmake_generate_options = ["-G Ninja"]
     ]])
 
+local has_words_before = function()
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
 table.insert(lvim.plugins, {
     "zbirenbaum/copilot-cmp",
     event = "InsertEnter",
+    fix_pairs = true,
     dependencies = { "zbirenbaum/copilot.lua" },
     config = function()
         local ok, cmp = pcall(require, "copilot_cmp")
-        if ok then cmp.setup({}) end
+        if ok then
+            cmp.setup({
+                mapping = {
+                    ["<Tab>"] = vim.schedule_wrap(function(fallback)
+                        if cmp.visible() and has_words_before() then
+                            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                        else
+                            fallback()
+                        end
+                    end),
+                },
+            })
+        end
     end,
 })
 

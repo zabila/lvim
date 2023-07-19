@@ -17,7 +17,9 @@ local themes = {
     ayu = "ayu",
 }
 
-lvim.transparent_window = true
+
+
+lvim.transparent_window = false
 lvim.colorscheme = themes.lunar
 
 local extra_opts = {
