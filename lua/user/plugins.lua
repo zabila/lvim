@@ -1,4 +1,5 @@
 lvim.plugins = {
+    "ellisonleao/gruvbox.nvim",
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
@@ -153,6 +154,7 @@ lvim.plugins = {
         end,
     },
     "theHamsta/nvim-dap-virtual-text",
+    "tjdevries/colorbuddy.nvim"
 }
 
 
