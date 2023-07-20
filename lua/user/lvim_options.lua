@@ -37,9 +37,9 @@ require("lvim.lsp.manager").setup("sqlls", opts)
 lvim.builtin.cmp.sources = {
     {
         name = "nvim_lsp",
-        entry_filter = function(entry, ctx)
+        entry_filter = function(entry, _)
             local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
-            if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+            if kind == "Snippet" then
                 return false
             end
             return true
