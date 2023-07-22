@@ -1,5 +1,7 @@
 lvim.plugins = {
+    "Shatur/neovim-session-manager",
     "ellisonleao/gruvbox.nvim",
+    "lifepillar/vim-solarized8",
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
