@@ -1,4 +1,5 @@
 lvim.plugins = {
+    { "christoomey/vim-tmux-navigator" },
     "Shatur/neovim-session-manager",
     "ellisonleao/gruvbox.nvim",
     "lifepillar/vim-solarized8",

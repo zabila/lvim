@@ -47,8 +47,8 @@ gruvbox.setup({
     transparent_mode = true,
 })
 
-lvim.transparent_window = true
-lvim.colorscheme = themes.gruvbox
+lvim.transparent_window = false
+lvim.colorscheme = themes.tokyonight_night
 
 local extra_opts = {
     sonokai = {
