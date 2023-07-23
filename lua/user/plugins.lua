@@ -1,4 +1,11 @@
 lvim.plugins = {
+    {
+        "lukas-reineke/indent-blankline.nvim",
+    },
+    {
+        "HiPhish/nvim-ts-rainbow2",
+    },
+    { 'projekt0n/github-nvim-theme' },
     { "christoomey/vim-tmux-navigator" },
     "Shatur/neovim-session-manager",
     "ellisonleao/gruvbox.nvim",

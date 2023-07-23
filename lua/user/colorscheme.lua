@@ -47,119 +47,25 @@ gruvbox.setup({
     transparent_mode = true,
 })
 
-local status_tokionight_ok, tokionight = pcall(require, "tokionight")
-if not status_tokionight_ok then
-    print("Tokionight don't installed")
-end
-
-tokionight.setup({
-    style = "storm",
-    light_style = "night",
-    transparent = false,
-    terminal_colors = true,
-    styles = {
-        comments = { italic = true },
-        keywords = { italic = true },
-        strings = { italic = true },
-        functions = {},
-        variables = {},
-        sidebars = "dark",
-        floats = "dark",
-    },
-    sidebars = { "qf", "vista_kind", "terminal", "packer" },
-    day_brightness = 0.3,
-    hide_inactive_statusline = false,
-    dim_inactive = false,
-    lualine_bold = false,
-
-    on_colors = function(colors)
-        colors.hint = colors.orange
-        colors.error = "#ff0000"
-    end,
-
-    on_highlights = function(hl, c)
-        local prompt = "#2d3149"
-        hl.TelescopeNormal = {
-            bg = c.bg_dark,
-            fg = c.fg_dark,
-        }
-        hl.TelescopeBorder = {
-            bg = c.bg_dark,
-            fg = c.bg_dark,
-        }
-        hl.TelescopePromptNormal = {
-            bg = prompt,
-        }
-        hl.TelescopePromptBorder = {
-            bg = prompt,
-            fg = prompt,
-        }
-        hl.TelescopePromptTitle = {
-            bg = prompt,
-            fg = prompt,
-        }
-        hl.TelescopePreviewTitle = {
-            bg = c.bg_dark,
-            fg = c.bg_dark,
-        }
-        hl.TelescopeResultsTitle = {
-            bg = c.bg_dark,
-            fg = c.bg_dark,
-        }
-    end,
-})
-
-lvim.builtin.lualine.on_config_done = {
-    options = {
-        theme = 'tokionight'
-    }
-}
-
-lvim.transparent_window = false
-lvim.colorscheme = themes.tokyonight
-
-local extra_opts = {
-    sonokai = {
-        styles = {
-            espresso = "espresso",
-            shusia = "shusia",
-            default = "default",
-        },
-    },
-    ayu = {
-        styles = {
-            mirage = "mirage",
-            light = "light",
-            dark = "dark",
-        },
-    },
-    edge = {
-        styles = {
-            aura = "aura",
-            neon = "neon",
-        },
-        airline_theme = "edge",
-        lualine_theme = "edge",
-    },
-}
-
-if vim.g.neovide then
-    lvim.transparent_window = false
+local status_git_ok, github = pcall(require, "github-theme")
+if not status_git_ok then
+    print("Don't have github-theme installed")
     return
 end
 
-if lvim.colorscheme == themes.sonokai then
-    vim.g.sonokai_style = "espresso"
-    vim.g.sonokai_style = "shusia"
-    vim.g.sonokai_style = "default"
-end
+github.setup({
+    options = {
+        styles = {
+            comments = 'italic',
+            strings = 'italic',
+            keywords = 'bold',
+            types = 'italic,bold',
+        }
+    }
+})
 
-if lvim.colorscheme == themes.edge then
-    vim.g.airline_theme = extra_opts.edge.airline_theme
-    vim.g.edge_style = extra_opts.edge.styles.aura
-    lvim.builtin.lualine.options.theme = extra_opts.edge.lualine_theme
-end
+local my_theme = 'github_dark_tritanopia'
+lvim.transparent_window = false
 
-if lvim.colorscheme == themes.ayu then
-    vim.g.ayucolor = extra_opts.ayu.styles.mirage
-end
+lvim.builtin.lualine.options.theme = my_theme
+lvim.colorscheme = my_theme
