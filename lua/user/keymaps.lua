@@ -30,6 +30,7 @@ lvim.lsp.buffer_mappings.normal_mode["gD"] = {
 }
 
 local wk = lvim.builtin.which_key
+wk.mappings["u"] = { require('undotree').toggle, "Undotree toggle" }
 wk.mappings["m"] = {
     m = { ":lua require('harpoon.mark').add_file()<cr>", "Mark file" },
     t = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", "Toggle UI" },
