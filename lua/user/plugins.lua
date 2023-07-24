@@ -1,8 +1,5 @@
 lvim.plugins = {
     {
-        "lukas-reineke/indent-blankline.nvim",
-    },
-    {
         "HiPhish/nvim-ts-rainbow2",
     },
     { 'projekt0n/github-nvim-theme' },
