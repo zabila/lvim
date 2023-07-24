@@ -64,7 +64,7 @@ github.setup({
     }
 })
 
-local my_theme = 'github_dark_tritanopia'
+local my_theme = themes.gruvbox
 lvim.transparent_window = false
 
 lvim.builtin.lualine.options.theme = my_theme

@@ -10,29 +10,9 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 lvim.builtin.luasnip.sources.friendly_snippets = true
 
-
--- LSP settings
-local formatters = require("lvim.lsp.null-ls.formatters")
-formatters.setup({
-    {
-        name = "sql_formatter",
-    },
-})
-
--- sql linting
-local linters = require("lvim.lsp.null-ls.linters")
-linters.setup({
-    {
-        name = "sqlfluff",
-        args = { "--dialect", "postgres", "--exclude-rules", "LT02,LT09,LT01,LT06,LT12,CP03" },
-    },
-})
-
---lsp sql
-local opts = {
-    filetypes = { "sql" },
-}
-require("lvim.lsp.manager").setup("sqlls", opts)
+-- vim.opt.spelllang = "en_us"
+-- vim.opt.spell = true
+--
 
 lvim.builtin.cmp.sources = {
     {
@@ -97,13 +77,10 @@ lvim.builtin.telescope.defaults.path_display = {
     shorten = 4,
 }
 
-
-
 -- Lualine settings
 local components = require "lvim.core.lualine.components"
 lvim.builtin.lualine.sections = {
     lualine_a = {
-        -- components.mode,
         "mode",
     },
     lualine_b = {
