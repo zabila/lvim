@@ -60,11 +60,7 @@ wk.mappings.g.t = {
     c = { require("telescope").extensions.git_worktree.create_git_worktree, "Create" },
 }
 
-wk.mappings.l.R = {
-    ":LspRestart<cr>",
-    kind.icons.exit .. " Restart"
-}
-
+wk.mappings.l.R = { ":LspRestart<cr>", kind.icons.exit .. " Restart" }
 wk.mappings["t"] = {
     name = "+Terminal",
     f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
