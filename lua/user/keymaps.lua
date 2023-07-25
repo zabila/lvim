@@ -65,26 +65,15 @@ wk.mappings.l.R = {
     kind.icons.exit .. " Restart"
 }
 
-lvim.builtin.which_key.mappings["t"] = {
+wk.mappings["t"] = {
     name = "+Terminal",
     f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
     v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
     h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
 }
 
-local status_telescope, telescope = pcall(require, "telescope.builtin")
-if not status_telescope then
-    print("Telescope is not installed")
-    return
-end
-
-wk.mappings["s"]["w"] = { function()
-    telescope.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-        winblend = 50,
-        previewer = false,
-    }))
-end, "Find in current buffer" }
-
+wk.mappings.f = { "<cmd>Telescope find_files<CR>", "Find file" }
+wk.mappings["s"]["w"] = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy find" }
 wk.mappings["S"] = {
     name = " persistence.nvim",
     s = { "<cmd>lua require('persistence').load()<cr>", kind.icons.clock .. " Reload last session for dir" },
