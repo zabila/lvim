@@ -1,18 +1,8 @@
 lvim.format_on_save = true
 vim.diagnostic.config({ virtual_text = true })
 
-lvim.builtin.treesitter.highlight.enable = true
-lvim.builtin.treesitter.ensure_installed = { "cpp", "c" }
-
-table.insert(lvim.plugins, {
-    "p00f/clangd_extensions.nvim",
-    ft = { "c", "cpp" },
-})
-
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd" })
-
 local clangd_flags = {
-
     "--fallback-style=google",
     "-j=12",
     "--header-insertion=iwyu",
@@ -73,45 +63,4 @@ local opts = {
         cmake.clangd_on_new_config(new_config)
     end,
 }
-
 require("lvim.lsp.manager").setup("clangd", opts)
-
-
-local status_ok_dap, dap = pcall(require, "dap")
-if not status_ok_dap then
-    print "dap not found"
-    return
-end
-
-dap.adapters.codelldb  = {
-    type = 'server',
-    port = "${port}",
-    executable = {
-        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb.cmd",
-        args = { "--port", "${port}" },
-        detached = false,
-    }
-
-    -- attach = {
-    --     pidProperty = "processId",
-    --     pidSelect = "ask",
-    -- },
-}
-
--- this configuration should start cpptools and the debug the executable main in the current directory when executing :DapContinue
-dap.configurations.cpp = {
-    {
-        name = "Launch",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-        runInTerminal = true,
-        console = "externalTerminal",
-    },
-}
-
-dap.configurations.c   = dap.configurations.cpp
