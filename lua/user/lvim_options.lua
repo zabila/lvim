@@ -8,4 +8,3 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.luasnip.sources.friendly_snippets = true
 lvim.builtin.project.detection_methods = { "lsp", "pattern" }
 lvim.builtin.project.patterns = { "CMakelists.txt", ".git" }
-lvim.builtin.telescope.defaults.path_display = { shorten = 4 }
