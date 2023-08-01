@@ -48,7 +48,7 @@ wk.mappings["m"] = {
 }
 
 wk.mappings["p"] = {
-    name = ' Projects ',
+    name = "Projects",
     l = { ':Telescope projects<cr>', 'Projects' }, -- requires telescope-project.nvim plugin
     r = { ':Telescope resume<cr>', 'Resume' },
 }
@@ -62,7 +62,7 @@ wk.mappings.g.t = {
 
 wk.mappings.l.R = { ":LspRestart<cr>", kind.icons.exit .. " Restart" }
 wk.mappings["t"] = {
-    name = "+Terminal",
+    name = "Terminal",
     f = { "<cmd>ToggleTerm<cr>", "Floating terminal" },
     v = { "<cmd>2ToggleTerm size=30 direction=vertical<cr>", "Split vertical" },
     h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
@@ -71,7 +71,7 @@ wk.mappings["t"] = {
 wk.mappings.f = { "<cmd>Telescope find_files<CR>", "Find file" }
 wk.mappings["s"]["w"] = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy find" }
 wk.mappings["S"] = {
-    name = " persistence.nvim",
+    name = "Persistence",
     s = { "<cmd>lua require('persistence').load()<cr>", kind.icons.clock .. " Reload last session for dir" },
     l = { "<cmd>lua require('persistence').load({ last = true })<cr>", kind.icons.clock .. " Restore last session" },
     Q = { "<cmd>lua require('persistence').stop()<cr>", kind.icons.exit .. " Quit without saving session" },
@@ -86,7 +86,7 @@ wk.mappings["B"] = {
 }
 
 wk.mappings["W"] = {
-    name = ' ' .. kind.icons.screen .. " Window Ctrl",
+    name = "Window Ctrl",
     h    = { "<C-w><C-h>", "Move to left window" },
     j    = { "<C-w><C-j>", "Move to below window" },
     k    = { "<C-w><C-k>", "Move to above window" },
@@ -111,6 +111,12 @@ wk.mappings["W"] = {
         j = { "<cmd>resize -10<cr>", "Decrease height" }
     },
     n    = { "<C-w>=", "Normalize Windows" }
+}
+
+wk.mappings["F"] = {
+    name = "Find files advanced",
+    a = { "<cmd> Telescope smart_open<cr>", "Smart open" },
+    f = { "<cmd> Telescope frecency<cr>", "Frecency" },
 }
 
 vim.keymap.set(

@@ -1,5 +1,17 @@
 lvim.plugins = {
     {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000
+    },
+    {
+        'echasnovski/mini.bracketed',
+        version = '*',
+        config = function()
+            require('mini.bracketed').setup()
+        end,
+    },
+    {
         "HiPhish/nvim-ts-rainbow2",
     },
     { 'projekt0n/github-nvim-theme' },
@@ -141,19 +153,18 @@ lvim.plugins = {
         'echasnovski/mini.surround',
         version = '*',
         config = function()
-            --NOTE: Replace with more comfotable mapings.
             require('mini.surround').setup({
                 mappings = {
-                    add = 'gza',            -- Add surrounding in Normal and Visual modes
-                    delete = 'gzd',         -- Delete surrounding
-                    find = 'gzf',           -- Find surrounding (to the right)
-                    find_left = 'gzF',      -- Find surrounding (to the left)
-                    highlight = 'gzh',      -- Highlight surrounding
-                    replace = 'gzr',        -- Replace surrounding
-                    update_n_lines = 'gzn', -- Update `n_lines`
+                    add = 'sa',            -- Add surrounding in Normal and Visual modes
+                    delete = 'sd',         -- Delete surrounding
+                    find = 'sf',           -- Find surrounding (to the right)
+                    find_left = 'sF',      -- Find surrounding (to the left)
+                    highlight = 'sh',      -- Highlight surrounding
+                    replace = 'sr',        -- Replace surrounding
+                    update_n_lines = 'sn', -- Update `n_lines`
 
-                    suffix_last = 'l',      -- Suffix to search with "prev" method
-                    suffix_next = 'n',      -- Suffix to search with "next" method
+                    suffix_last = 'l',     -- Suffix to search with "prev" method
+                    suffix_next = 'n',     -- Suffix to search with "next" method
                 },
             })
         end
@@ -178,10 +189,49 @@ lvim.plugins = {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+    },
+    {
+        "nvim-telescope/telescope-frecency.nvim",
+        config = function()
+            require "telescope".load_extension("frecency")
+        end,
+        dependencies = { "kkharji/sqlite.lua" }
+    },
+    {
+        "folke/zen-mode.nvim",
+        config = function()
+            require("zen-mode").setup {
+                window = {
+                    backdrop = 1,
+                    width = 0.8,
+                    options = {
+                        signcolumn = "no",
+                        number = true,
+                        relativenumber = true,
+                    },
+                },
+                plugins = {
+                    gitsigns = { enabled = true },
+                    tmux = { enabled = true },
+                },
+            }
+        end,
+    },
+    {
+        "danielfalk/smart-open.nvim",
+        branch = "0.2.x",
+        config = function()
+            require("telescope").load_extension("smart_open")
+        end,
+        dependencies = {
+            "kkharji/sqlite.lua",
+            -- Only required if using match_algorithm fzf
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+            { "nvim-telescope/telescope-fzy-native.nvim" },
+        },
     }
 }
-
-
 
 vim.cmd(
     [[

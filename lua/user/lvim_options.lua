@@ -8,3 +8,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.luasnip.sources.friendly_snippets = true
 lvim.builtin.project.detection_methods = { "lsp", "pattern" }
 lvim.builtin.project.patterns = { "CMakelists.txt", ".git" }
+
+--TODO: This work only for windows.
+vim.g.sqlite_clib_path = "C:\\sqlite-dll\\sqlite3.dll"
